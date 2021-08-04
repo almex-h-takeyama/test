@@ -1,0 +1,6 @@
+name: "create-github-release-pr-"
+description: "Run git-pr-release"
+author: "h-takeyama <h-takeyama@usen-next.jp>"
+runs:
+  using: "docker"
+  image: "Dockerfile"
