@@ -12,12 +12,9 @@ jobs:
           fetch-depth: 0
 
       - name: Create a release pull request
-        uses: docker://ruby:3
+        uses: takeyama-h1/test@master
         env:
           GIT_PR_RELEASE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_PR_RELEASE_BRANCH_PRODUCTION: master
           GIT_PR_RELEASE_BRANCH_STAGING: prerelease
           GIT_PR_RELEASE_LABELS: "for master"
-        with:
-          entrypoint: /bin/bash
-          args: gem install git-pr-release && git-pr-release
