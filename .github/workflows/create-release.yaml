@@ -19,4 +19,4 @@ jobs:
           GIT_PR_RELEASE_BRANCH_STAGING: prerelease
           GIT_PR_RELEASE_LABELS: "for master"
         with:
-          args: gem install -N git-pr-release && git-pr-release --no-fetch
+          args: gem install -N git-pr-release && git-pr-release
