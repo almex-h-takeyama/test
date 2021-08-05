@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 jobs:
   githubPrRelease:
@@ -25,15 +25,16 @@ jobs:
 
       - name: Slack Notification on Success
         if: success()
-        uses: rtCamp/action-slack-notify@v2.2.0
-        env:
-          SLACK_TITLE: "リリースPRの作成に成功しました"
-          SLACK_COLOR: good
-          SLACK_MESSAGE: "${{steps.create-pr.outputs.pr_url}} が作成されました。"
+        uses: 8398a7/action-slack@v3
+        with:
+          fields: repo,eventName
+          status: success
+          text: "${{steps.create-pr.outputs.pr_url}} が作成されました。"
 
       - name: Slack Notification on Failure
-        uses: rtCamp/action-slack-notify@v2.2.0
+        uses: 8398a7/action-slack@v3
         if: failure()
-        env:
-          SLACK_TITLE: "リリースPRの作成に失敗しました"
-          SLACK_COLOR: danger
+        with:
+          fields: repo,eventName
+          status: failure
+          text: "PRの作成に失敗しました。"
