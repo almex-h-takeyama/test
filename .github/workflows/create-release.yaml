@@ -29,7 +29,7 @@ jobs:
         env:
           SLACK_TITLE: "リリースPRの作成に成功しました"
           SLACK_COLOR: good
-          SLACK_MESSAGE: "${{ steps.create-pr.outputs.pr_url }}"
+          SLACK_MESSAGE: "${{steps.create-pr.outputs.pr_url}} が作成されました。"
 
       - name: Slack Notification on Failure
         uses: rtCamp/action-slack-notify@v2.2.0
