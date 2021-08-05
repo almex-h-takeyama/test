@@ -3,8 +3,11 @@ name: Create a release pull request
 on:
   workflow_dispatch:
 
+env:
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
 jobs:
-  create-release-pr:
+  githubPrRelease:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -12,9 +15,25 @@ jobs:
           fetch-depth: 0
 
       - name: Create a release pull request
+        id: create-pr
         uses: takeyama-h1/test@master
         env:
           GIT_PR_RELEASE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_PR_RELEASE_BRANCH_PRODUCTION: master
           GIT_PR_RELEASE_BRANCH_STAGING: prerelease
           GIT_PR_RELEASE_LABELS: "for master"
+
+      - name: Slack Notification on Success
+        if: success()
+        uses: rtCamp/action-slack-notify@v2.2.0
+        env:
+          SLACK_TITLE: "リリースPRの作成に成功しました"
+          SLACK_COLOR: good
+          SLACK_MESSAGE: "${{ steps.create-pr.outputs.pr_url }}"
+
+      - name: Slack Notification on Failure
+        uses: rtCamp/action-slack-notify@v2.2.0
+        if: failure()
+        env:
+          SLACK_TITLE: "リリースPRの作成に失敗しました"
+          SLACK_COLOR: danger

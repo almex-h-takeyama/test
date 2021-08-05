@@ -1,6 +1,9 @@
-name: "create-github-release-pr-"
+name: "github-release-pr-action"
 description: "Run git-pr-release"
 author: "h-takeyama <h-takeyama@usen-next.jp>"
+outputs:
+  pr_url:
+    description: "作成したpull requestのURL"
 runs:
   using: "docker"
   image: "Dockerfile"

@@ -4,4 +4,5 @@ RUN apk --update --no-cache upgrade && \
     apk --no-cache add git tzdata && \
     gem install --no-document git-pr-release
 
-ENTRYPOINT ["git-pr-release","--squashed"]
+ADD ./entrypoint.sh ./entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
