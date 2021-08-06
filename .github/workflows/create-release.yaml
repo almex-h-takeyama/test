@@ -31,7 +31,7 @@ jobs:
           fields: repo,job
           custom_payload: |
             {
-              text: `:white_check_mark: ${process.env.AS_REPO} にリリース対象のPRはありませんでした。`,
+              text: `:information_source: ${process.env.AS_REPO} にリリース対象のPRはありませんでした。`,
               attachments: [{
                 "fields":[
                   {
