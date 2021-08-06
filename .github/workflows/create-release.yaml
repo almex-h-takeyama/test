@@ -27,10 +27,11 @@ jobs:
         if: success()
         uses: 8398a7/action-slack@v3
         with:
-          status: success
+          status: custom
           custom_payload: |
             {
               attachments: [{
+                color: 'good',
                 text: `${process.env.AS_REPO} で ${{steps.create-pr.outputs.pr_url}} が作成されました。\n Job: ${process.env.AS_JOB}`,
               }]
             }
@@ -39,10 +40,11 @@ jobs:
         uses: 8398a7/action-slack@v3
         if: failure()
         with:
-          status: failure
+          status: custom
           custom_payload: |
             {
               attachments: [{
+                color: 'danger',
                 text: `${process.env.AS_REPO} で PRの作成に失敗しました。\n Job: ${process.env.AS_JOB}`,
               }]
             }
