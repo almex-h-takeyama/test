@@ -27,14 +27,22 @@ jobs:
         if: success()
         uses: 8398a7/action-slack@v3
         with:
-          fields: repo,eventName
-          status: success
-          text: "${{steps.create-pr.outputs.pr_url}} が作成されました。"
+          custom_payload: |
+            {
+              attachments: [{
+                color: 'good',
+                text: `${process.env.AS_REPO} で ${{steps.create-pr.outputs.pr_url}} が作成されました。\n Job: ${process.env.AS_JOB}`,
+              }]
+            }
 
       - name: Slack Notification on Failure
         uses: 8398a7/action-slack@v3
         if: failure()
         with:
-          fields: repo,eventName
-          status: failure
-          text: "PRの作成に失敗しました。"
+          custom_payload: |
+            {
+              attachments: [{
+                color: 'danger',
+                text: `${process.env.AS_REPO} で PRの作成に失敗しました。\n Job: ${process.env.AS_JOB}`,
+              }]
+            }
