@@ -31,7 +31,7 @@ jobs:
           fields: repo,job
           custom_payload: |
             {
-              text: ":white_check_mark: ${process.env.AS_REPO} で リリースPRの作成に成功しました。"
+              text: `:white_check_mark: ${process.env.AS_REPO} で リリースPRの作成に成功しました。`,
               attachments: [{
                 color: 'good',
                 "fields":[
@@ -42,7 +42,7 @@ jobs:
                   },
                   {
                     "title": "Job",
-                    "value": "${process.env.AS_JOB}",
+                    "value": `${process.env.AS_JOB}`,
                     "short": false
                   }
                 ]
@@ -57,13 +57,13 @@ jobs:
           fields: repo,job
           custom_payload: |
             {
-              text: ":warning: ${process.env.AS_REPO} で リリースPRの作成に失敗しました。",
+              text: `:warning: ${process.env.AS_REPO} で リリースPRの作成に失敗しました。`,
               attachments: [{
                 color: 'danger',
                 "fields":[
                   {
                     "title": "Job",
-                    "value": "${process.env.AS_JOB}",
+                    "value": `${process.env.AS_JOB}`,
                     "short": false
                   }
                 ]
