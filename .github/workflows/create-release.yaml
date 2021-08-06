@@ -31,9 +31,21 @@ jobs:
           fields: repo,job
           custom_payload: |
             {
+              text: ":white_check_mark: ${process.env.AS_REPO} で リリースPRの作成に成功しました。"
               attachments: [{
                 color: 'good',
-                text: `${process.env.AS_REPO} で ${{steps.create-pr.outputs.pr_url}} が作成されました。\n Job: ${process.env.AS_JOB}`,
+                "fields":[
+                  {
+                    "title": "Pull Request",
+                    "value": "${{steps.create-pr.outputs.pr_url}}",
+                    "short": false
+                  },
+                  {
+                    "title": "Job",
+                    "value": "${process.env.AS_JOB}",
+                    "short": false
+                  }
+                ]
               }]
             }
 
@@ -45,8 +57,15 @@ jobs:
           fields: repo,job
           custom_payload: |
             {
+              text: ":warning: ${process.env.AS_REPO} で リリースPRの作成に失敗しました。",
               attachments: [{
                 color: 'danger',
-                text: `${process.env.AS_REPO} で PRの作成に失敗しました。\n Job: ${process.env.AS_JOB}`,
+                "fields":[
+                  {
+                    "title": "Job",
+                    "value": "${process.env.AS_JOB}",
+                    "short": false
+                  }
+                ]
               }]
             }
