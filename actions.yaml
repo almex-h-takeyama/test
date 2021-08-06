@@ -2,6 +2,8 @@ name: "github-release-pr-action"
 description: "Run git-pr-release"
 author: "h-takeyama <h-takeyama@usen-next.jp>"
 outputs:
+  no_pr:
+    description: "PRが作成されたか(リリースするものはあるか) true/falseの文字列"
   pr_url:
     description: "作成したpull requestのURL"
 runs:
