@@ -23,8 +23,28 @@ jobs:
           GIT_PR_RELEASE_BRANCH_STAGING: prerelease
           GIT_PR_RELEASE_LABELS: "for master"
 
+      - name: Slack Notification on Nothing Pull Request
+        if: "${{ success() && steps.create-pr.outputs.no_pr == 'true' }}"
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: repo,job
+          custom_payload: |
+            {
+              text: `:white_check_mark: ${process.env.AS_REPO} にリリース対象のPRはありませんでした。`,
+              attachments: [{
+                "fields":[
+                  {
+                    "title": "Job",
+                    "value": `${process.env.AS_JOB}`,
+                    "short": false
+                  }
+                ]
+              }]
+            }
+
       - name: Slack Notification on Success
-        if: success()
+        if: "${{ success() && steps.create-pr.outputs.no_pr == 'false' }}"
         uses: 8398a7/action-slack@v3
         with:
           status: custom
