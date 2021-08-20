@@ -71,7 +71,7 @@ jobs:
             "cards": [
               {
                 "header": {
-                  "title": "リリースPR作成に成功しました。"
+                  "title": "<font color="green">SUCCESS!!</font> リリースPR作成に成功しました。"
                 },
                 "sections": [
                   {
@@ -123,7 +123,7 @@ jobs:
             "cards": [
               {
                 "header": {
-                  "title": "WARNING!! リリース対象のPR作成に失敗しました"
+                  "title": "<font color="red">WARNING!!</font> リリース対象のPR作成に失敗しました"
                 },
                 "sections": [
                   {
