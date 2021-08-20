@@ -117,22 +117,42 @@ jobs:
           }' | curl -H 'Content-Type: application/json; charset=UTF-8' -X POST -d @- "${{ secrets.HAPPYHOTEL_PR_NOTIFICATION_WEBHOOK_URL }}"
 
       - name: Slack Notification on Failure
-        uses: 8398a7/action-slack@v3
         if: failure()
-        with:
-          status: custom
-          fields: repo,job
-          custom_payload: |
-            {
-              text: `:warning: ${process.env.AS_REPO} で リリースPRの作成に失敗しました。`,
-              attachments: [{
-                color: 'danger',
-                "fields":[
+        run: |
+          jq -n -M '{
+            "cards": [
+              {
+                "header": {
+                  "title": "WARNING!! リリース対象のPR作成に失敗しました"
+                },
+                "sections": [
                   {
-                    "title": "Job",
-                    "value": `${process.env.AS_JOB}`,
-                    "short": false
+                    "widgets": [
+                      {
+                        "keyValue": {
+                          "topLabel": "Repository",
+                          "content": "${{ github.repository }}",
+                          "onClick": {
+                            "openLink": {
+                              "url": "https://github.com/${{ github.repository }}"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "keyValue": {
+                          "topLabel": "Workflow",
+                          "content": "${{ github.workflow }}",
+                          "onClick": {
+                            "openLink": {
+                              "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                            }
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
-              }]
-            }
+              }
+            ]
+          }' | curl -H 'Content-Type: application/json; charset=UTF-8' -X POST -d @- "${{ secrets.HAPPYHOTEL_PR_NOTIFICATION_WEBHOOK_URL }}"

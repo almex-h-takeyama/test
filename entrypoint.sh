@@ -13,3 +13,5 @@ if grep -q "No pull requests to be released" result.txt; then
 else
     echo "::set-output name=no_pr::false"
 fi
+
+exit 1
