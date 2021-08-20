@@ -30,7 +30,7 @@ jobs:
             "cards": [
               {
                 "header": {
-                  "title": "$GITHUB_REPOSITORY にリリース対象のPRはありませんでした。"
+                  "title": "${{ github.repository }} にリリース対象のPRはありませんでした。"
                 },
                 "sections": [
                   {
@@ -38,14 +38,14 @@ jobs:
                       {
                         "keyValue": {
                           "topLabel": "Job",
-                          "content": "$GITHUB_WORKFLOW",
+                          "content": "${{ github.action }}",
                           "contentMultiline": "false",
                           "button": {
                             "textButton": {
                               "text": "VISIT JOB",
                               "onClick": {
                                 "openLink": {
-                                  "url": "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+                                  "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                                 }
                               }
                             }
