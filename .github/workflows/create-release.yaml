@@ -30,16 +30,29 @@ jobs:
             "cards": [
               {
                 "header": {
-                  "title": "${{ github.repository }} にリリース対象のPRはありませんでした。"
+                  "title": "リリース対象のPR作成がされませんでした。"
                 },
                 "sections": [
                   {
                     "widgets": [
                       {
                         "keyValue": {
+                            "topLabel": "Repository",
+                            "content": "${{ github.repository }}",
+                            "button": {
+                              "textButton": {
+                                "text": "VISIT REPOSITORY",
+                                "onClick": {
+                                  "openLink": {
+                                    "url": "https://github.com/${{ github.repository }}"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                        "keyValue": {
                           "topLabel": "Job",
-                          "content": "${{ github.action }}",
-                          "contentMultiline": "false",
+                          "content": "${{ github.workflow }}",
                           "button": {
                             "textButton": {
                               "text": "VISIT JOB",
