@@ -25,23 +25,46 @@ jobs:
 
       - name: Slack Notification on Nothing Pull Request
         if: "${{ success() && steps.create-pr.outputs.no_pr == 'true' }}"
-        uses: 8398a7/action-slack@v3
-        with:
-          status: custom
-          fields: repo,job
-          custom_payload: |
-            {
-              text: `:information_source: ${process.env.AS_REPO} にリリース対象のPRはありませんでした。`,
-              attachments: [{
-                "fields":[
-                  {
-                    "title": "Job",
-                    "value": `${process.env.AS_JOB}`,
-                    "short": false
-                  }
-                ]
-              }]
-            }
+        run: |
+          jq -n '{
+            "cards": [
+              {
+                  "header": {
+                    "title": ":information_source: ${process.env.AS_REPO} にリリース対象のPRはありませんでした。",
+                  },
+                  "sections": [
+                      {
+                          "widgets": [
+                              {
+                                  "keyValue": {
+                                      "topLabel": "title",
+                                      "content": "12345",
+                                      "contentMultiline": "false",
+                                      "bottomLabel": "Delayed",
+                                      "onClick": {
+                                          "openLink": {
+                                              "url": "https://example.com/"
+                                          }
+                                      },
+                                      "icon": "TRAIN",
+                                      "button": {
+                                          "textButton": {
+                                            "text": "VISIT WEBSITE",
+                                            "onClick": {
+                                                "openLink": {
+                                                      "url": "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+                                                  }
+                                              }
+                                            }
+                                      }
+                                  }
+                              }
+                          ]
+                      }
+                  ]
+              }
+          ]
+          }' | curl -H 'Content-Type: application/json; charset=UTF-8' -d @- ${{ secrets.SLACK_WEBHOOK }}
 
       - name: Slack Notification on Success
         if: "${{ success() && steps.create-pr.outputs.no_pr == 'false' }}"
