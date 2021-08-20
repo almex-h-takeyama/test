@@ -37,19 +37,21 @@ jobs:
                     "widgets": [
                       {
                         "keyValue": {
-                            "topLabel": "Repository",
-                            "content": "${{ github.repository }}",
-                            "button": {
-                              "textButton": {
-                                "text": "VISIT REPOSITORY",
-                                "onClick": {
-                                  "openLink": {
-                                    "url": "https://github.com/${{ github.repository }}"
-                                  }
+                          "topLabel": "Repository",
+                          "content": "${{ github.repository }}",
+                          "button": {
+                            "textButton": {
+                              "text": "VISIT REPOSITORY",
+                              "onClick": {
+                                "openLink": {
+                                  "url": "https://github.com/${{ github.repository }}"
                                 }
                               }
                             }
-                          },
+                          }
+                        }
+                      },
+                      {
                         "keyValue": {
                           "topLabel": "Job",
                           "content": "${{ github.workflow }}",
