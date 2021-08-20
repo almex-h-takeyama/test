@@ -75,10 +75,12 @@ jobs:
                 },
                 "sections": [
                   {
-                    "textParagraph": {
-                      "text": "<font color=\"green\">SUCCESS!!</font>"
-                    },
                     "widgets": [
+                      {
+                        "textParagraph": {
+                          "text": "<font color=\"green\">SUCCESS!!</font>"
+                        }
+                      },
                       {
                         "keyValue": {
                           "topLabel": "Repository",
@@ -130,10 +132,12 @@ jobs:
                 },
                 "sections": [
                   {
-                    "textParagraph": {
-                      "text": "<font color=\"red\">WARNING!!</font>"
-                    },
                     "widgets": [
+                      {
+                        "textParagraph": {
+                          "text": "<font color=\"red\">WARNING!!</font>"
+                        }
+                      },
                       {
                         "keyValue": {
                           "topLabel": "Repository",
