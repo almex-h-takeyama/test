@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  HAPPYHOTEL_PR_NOTIFICATION_WEBHOOK_URL: ${{ secrets.HAPPYHOTEL_PR_NOTIFICATION_WEBHOOK_URL }}
 
 jobs:
   github-pr-release:
@@ -26,45 +26,38 @@ jobs:
       - name: Slack Notification on Nothing Pull Request
         if: "${{ success() && steps.create-pr.outputs.no_pr == 'true' }}"
         run: |
-          jq -n '{
+          jq -n -M '{
             "cards": [
               {
-                  "header": {
-                    "title": ":information_source: ${process.env.AS_REPO} にリリース対象のPRはありませんでした。",
-                  },
-                  "sections": [
+                "header": {
+                  "title": "$GITHUB_REPOSITORY にリリース対象のPRはありませんでした。"
+                },
+                "sections": [
+                  {
+                    "widgets": [
                       {
-                          "widgets": [
-                              {
-                                  "keyValue": {
-                                      "topLabel": "title",
-                                      "content": "12345",
-                                      "contentMultiline": "false",
-                                      "bottomLabel": "Delayed",
-                                      "onClick": {
-                                          "openLink": {
-                                              "url": "https://example.com/"
-                                          }
-                                      },
-                                      "icon": "TRAIN",
-                                      "button": {
-                                          "textButton": {
-                                            "text": "VISIT WEBSITE",
-                                            "onClick": {
-                                                "openLink": {
-                                                      "url": "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-                                                  }
-                                              }
-                                            }
-                                      }
-                                  }
+                        "keyValue": {
+                          "topLabel": "Job",
+                          "content": "$GITHUB_WORKFLOW",
+                          "contentMultiline": "false",
+                          "button": {
+                            "textButton": {
+                              "text": "VISIT JOB",
+                              "onClick": {
+                                "openLink": {
+                                  "url": "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+                                }
                               }
-                          ]
+                            }
+                          }
+                        }
                       }
-                  ]
+                    ]
+                  }
+                ]
               }
-          ]
-          }' | curl -H 'Content-Type: application/json; charset=UTF-8' -d @- ${{ secrets.SLACK_WEBHOOK }}
+            ]
+          }' | curl -H 'Content-Type: application/json; charset=UTF-8' -X POST -d @- "${{ secrets.HAPPYHOTEL_PR_NOTIFICATION_WEBHOOK_URL }}"
 
       - name: Slack Notification on Success
         if: "${{ success() && steps.create-pr.outputs.no_pr == 'false' }}"
