@@ -53,7 +53,7 @@ jobs:
                       },
                       {
                         "keyValue": {
-                          "topLabel": "Job",
+                          "topLabel": "Workflow",
                           "content": "${{ github.workflow }}",
                           "button": {
                             "textButton": {
@@ -76,29 +76,70 @@ jobs:
 
       - name: Slack Notification on Success
         if: "${{ success() && steps.create-pr.outputs.no_pr == 'false' }}"
-        uses: 8398a7/action-slack@v3
-        with:
-          status: custom
-          fields: repo,job
-          custom_payload: |
-            {
-              text: `:white_check_mark: ${process.env.AS_REPO} で リリースPRの作成に成功しました。`,
-              attachments: [{
-                color: 'good',
-                "fields":[
+        run: |
+          jq -n -M '{
+            "cards": [
+              {
+                "header": {
+                  "title": "リリースPR作成に成功しました。"
+                },
+                "sections": [
                   {
-                    "title": "Pull Request",
-                    "value": "${{steps.create-pr.outputs.pr_url}}",
-                    "short": false
-                  },
-                  {
-                    "title": "Job",
-                    "value": `${process.env.AS_JOB}`,
-                    "short": false
+                    "widgets": [
+                      {
+                        "keyValue": {
+                          "topLabel": "Repository",
+                          "content": "${{ github.repository }}",
+                          "button": {
+                            "textButton": {
+                              "text": "VISIT REPOSITORY",
+                              "onClick": {
+                                "openLink": {
+                                  "url": "https://github.com/${{ github.repository }}"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "keyValue": {
+                          "topLabel": "Pull Request",
+                          "content": "${{ steps.create-pr.outputs.pr_url }}",
+                          "button": {
+                            "textButton": {
+                              "text": "VISIT PULL REQUEST",
+                              "onClick": {
+                                "openLink": {
+                                  "url": "${{ steps.create-pr.outputs.pr_url }}"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "keyValue": {
+                          "topLabel": "Workflow",
+                          "content": "${{ github.workflow }}",
+                          "button": {
+                            "textButton": {
+                              "text": "VISIT JOB",
+                              "onClick": {
+                                "openLink": {
+                                  "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
-              }]
-            }
+              }
+            ]
+          }' | curl -H 'Content-Type: application/json; charset=UTF-8' -X POST -d @- "${{ secrets.HAPPYHOTEL_PR_NOTIFICATION_WEBHOOK_URL }}"
 
       - name: Slack Notification on Failure
         uses: 8398a7/action-slack@v3
