@@ -78,7 +78,7 @@ jobs:
                     "widgets": [
                       {
                         "textParagraph": {
-                          "text": "<font color=\"#00ff00\">SUCCESS!!</font>"
+                          "text": "<font color=\"#2eb886\">SUCCESS!!</font>"
                         }
                       },
                       {
