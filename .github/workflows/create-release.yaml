@@ -39,14 +39,9 @@ jobs:
                         "keyValue": {
                           "topLabel": "Repository",
                           "content": "${{ github.repository }}",
-                          "button": {
-                            "textButton": {
-                              "text": "VISIT REPOSITORY",
-                              "onClick": {
-                                "openLink": {
-                                  "url": "https://github.com/${{ github.repository }}"
-                                }
-                              }
+                          "onClick": {
+                            "openLink": {
+                              "url": "https://github.com/${{ github.repository }}"
                             }
                           }
                         }
@@ -55,14 +50,9 @@ jobs:
                         "keyValue": {
                           "topLabel": "Workflow",
                           "content": "${{ github.workflow }}",
-                          "button": {
-                            "textButton": {
-                              "text": "VISIT JOB",
-                              "onClick": {
-                                "openLink": {
-                                  "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                                }
-                              }
+                          "onClick": {
+                            "openLink": {
+                              "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                             }
                           }
                         }
@@ -90,14 +80,9 @@ jobs:
                         "keyValue": {
                           "topLabel": "Repository",
                           "content": "${{ github.repository }}",
-                          "button": {
-                            "textButton": {
-                              "text": "VISIT REPOSITORY",
-                              "onClick": {
-                                "openLink": {
-                                  "url": "https://github.com/${{ github.repository }}"
-                                }
-                              }
+                          "onClick": {
+                            "openLink": {
+                              "url": "https://github.com/${{ github.repository }}"
                             }
                           }
                         }
@@ -106,14 +91,9 @@ jobs:
                         "keyValue": {
                           "topLabel": "Pull Request",
                           "content": "${{ steps.create-pr.outputs.pr_url }}",
-                          "button": {
-                            "textButton": {
-                              "text": "VISIT PULL REQUEST",
-                              "onClick": {
-                                "openLink": {
-                                  "url": "${{ steps.create-pr.outputs.pr_url }}"
-                                }
-                              }
+                          "onClick": {
+                            "openLink": {
+                              "url": "${{ steps.create-pr.outputs.pr_url }}"
                             }
                           }
                         }
@@ -122,14 +102,9 @@ jobs:
                         "keyValue": {
                           "topLabel": "Workflow",
                           "content": "${{ github.workflow }}",
-                          "button": {
-                            "textButton": {
-                              "text": "VISIT JOB",
-                              "onClick": {
-                                "openLink": {
-                                  "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                                }
-                              }
+                          "onClick": {
+                            "openLink": {
+                              "url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                             }
                           }
                         }
